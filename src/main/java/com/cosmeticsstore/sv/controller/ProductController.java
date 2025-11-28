@@ -111,7 +111,7 @@ public class ProductController extends HttpServlet {
             String stockString = request.getParameter("stock");
             String categoryIdString = request.getParameter("categoryId");
 
-            // 🔍 Validaciones básicas
+            // Validaciones básicas
             if (name == null || name.trim().isEmpty())
                 throw new IllegalArgumentException("El nombre del producto es obligatorio.");
             if (priceString == null || priceString.trim().isEmpty())
