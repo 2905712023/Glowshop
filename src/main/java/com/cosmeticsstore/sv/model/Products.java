@@ -25,7 +25,9 @@ import jakarta.persistence.Table;
     @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name"),
     @NamedQuery(name = "Products.findByDescription", query = "SELECT p FROM Products p WHERE p.description = :description"),
     @NamedQuery(name = "Products.findByPrice", query = "SELECT p FROM Products p WHERE p.price = :price"),
-    @NamedQuery(name = "Products.findByStock", query = "SELECT p FROM Products p WHERE p.stock = :stock")})
+    @NamedQuery(name = "Products.findByStock", query = "SELECT p FROM Products p WHERE p.stock = :stock")
+})
+
 public class Products implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,6 +52,8 @@ public class Products implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     @ManyToOne
     private Categories category;
+    @Column(name = "path")
+    private String path;
 
     public Products() {
     }
@@ -58,10 +62,11 @@ public class Products implements Serializable {
         this.productId = productId;
     }
 
-    public Products(Integer productId, String name, BigDecimal price) {
+    public Products(Integer productId, String name, BigDecimal price, String path) {
         this.productId = productId;
         this.name = name;
         this.price = price;
+        this.path = path;
     }
 
     public Integer getProductId() {
@@ -118,6 +123,14 @@ public class Products implements Serializable {
 
     public void setCategory(Categories categoryId) {
         this.category = categoryId;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
