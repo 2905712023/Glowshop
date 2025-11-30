@@ -4,12 +4,12 @@
         
     <h3 class="mb-3">Manage Categories</h3>
 
-    <a href="#" class="btn btn-success btn-sm mb-3">
+    <a href="categories?action=new" class="btn btn-success btn-sm mb-3">
         <i class="fa fa-plus-circle"></i> New Category
     </a>
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered table-striped mt-2">
+            <table id="categoriesTable" class="table table-bordered table-striped mt-2 nowrap">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -25,7 +25,7 @@
                             <td>${item.name}</td>
                             <td>${item.description}</td>                         
                             <td>
-                                <a href="#"
+                                <a href="categories?action=update&categoryId=${item.categoryId}"
                                     class="btn btn-info btn-sm">
                                     <i class="fa fa-edit"></i>
                                 </a>
@@ -48,32 +48,52 @@
     </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const deleteButtons = document.querySelectorAll(".btn-delete");
-    
-    deleteButtons.forEach(btn => {
-        btn.addEventListener("click", function(event) {
-            event.preventDefault(); // Evita ir directamente al enlace
-            
-            const productId = this.getAttribute("data-id");
-            const url = this.getAttribute("href");
-            
-            Swal.fire({
-                title: "¿Eliminar categoría?",
-                text: `¿Seguro que deseas eliminar esta categoría?`,
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sí, eliminar",
-                cancelButtonText: "Cancelar"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirigimos al servlet si el usuario confirma
-                    window.location.href = url;
-                }
+    document.addEventListener("DOMContentLoaded", function() {
+        const deleteButtons = document.querySelectorAll(".btn-delete");
+        
+        deleteButtons.forEach(btn => {
+            btn.addEventListener("click", function(event) {
+                event.preventDefault(); // Evita ir directamente al enlace
+                
+                const productId = this.getAttribute("data-id");
+                const url = this.getAttribute("href");
+                
+                Swal.fire({
+                    title: "¿Eliminar categoría?",
+                    text: `¿Seguro que deseas eliminar esta categoría?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, eliminar",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirigimos al servlet si el usuario confirma
+                        window.location.href = url;
+                    }
+                });
             });
         });
     });
-});
+    window.addEventListener("load", function(){
+        $('#categoriesTable').DataTable({
+            "pagingType": "simple_numbers",
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron productos",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "responsive" : true
+        });
+    });
 </script>

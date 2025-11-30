@@ -1,15 +1,11 @@
-
 package com.cosmeticsstore.sv.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-
 import com.cosmeticsstore.sv.dao.CategoryDao;
 import com.cosmeticsstore.sv.dao.ProductDAO;
 import com.cosmeticsstore.sv.model.Categories;
-import com.cosmeticsstore.sv.model.Product;
 import com.cosmeticsstore.sv.model.Products;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -85,6 +81,7 @@ public class ProductController extends HttpServlet {
         
         if (product != null) {
             request.setAttribute("product", product);
+            request.setAttribute("categoryId", product.getCategoryId());
             request.setAttribute("categories", categoryDao.findAllToShowSelect());
             request.setAttribute("pageTitle", "Update product");
             request.setAttribute("pageContent", formProductPage);
@@ -138,13 +135,15 @@ public class ProductController extends HttpServlet {
             product.setCategory(category);
             
             System.out.println("Id del product " + idParam);
-            int productId = Integer.parseInt(idParam);
-            if (productId == 0) {
+            
+            if (idParam == null || idParam.trim().isEmpty()) {
                 // Crear nuevo producto
+                System.out.println("creando");
                 result = productDao.Create(product);
                 request.setAttribute("message", "Producto creado correctamente.");
             } else {
-                productId = Integer.parseInt(idParam);
+                System.out.println("actualizando producto");
+                int productId = Integer.parseInt(idParam);
                 product.setProductId(productId);
                 result = productDao.Update(product);
                 request.setAttribute("message", "Producto actualizado correctamente.");
@@ -162,19 +161,18 @@ public class ProductController extends HttpServlet {
         }
 
         if (result > 0) {
-            System.out.println("Producto creado correctamente.");
-            request.getSession().setAttribute("message", "Producto creado correctamente.");
+            System.out.println("Producto guardado correctamente.");
+            request.getSession().setAttribute("message", "Producto guardado correctamente.");
             response.sendRedirect("products?action=list");
         } else {
             System.out.println("ERROR AL GUARDAR : "+errorMessage);
-            request.getSession().setAttribute("message", "ERROR AL GUARDAR : "+errorMessage);
+            request.getSession().setAttribute("ErrorMessage", "ERROR AL GUARDAR : "+errorMessage);
             request.setAttribute("product", product);
             request.setAttribute("pageContent", formProductPage);
             request.getRequestDispatcher(mainLayout).forward(request, response);
         }
     }
-
-        
+ 
     protected void List(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -183,6 +181,18 @@ public class ProductController extends HttpServlet {
         // Definir las variables del layout
         request.setAttribute("pageTitle", "Product Dashboard");
         request.setAttribute("pageContent", listProductPage);
+        request.getRequestDispatcher(mainLayout).forward(request, response);
+    }
+
+    private void Create(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CategoryDao categoryDao = new CategoryDao();
+
+        request.setAttribute("product", new Products());
+        request.setAttribute("categoryId", 0);
+        request.setAttribute("categories", categoryDao.findAllToShowSelect());
+        request.setAttribute("pageTitle", "Create Product");
+        request.setAttribute("pageContent", formProductPage);
         request.getRequestDispatcher(mainLayout).forward(request, response);
     }
 
@@ -225,19 +235,4 @@ public class ProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void Create(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CategoryDao categoryDao = new CategoryDao();
-
-        request.setAttribute("product", new Product());
-        request.setAttribute("categories", categoryDao.findAllToShowSelect());
-        request.setAttribute("pageTitle", "Create Product");
-        request.setAttribute("pageContent", formProductPage);
-        request.getRequestDispatcher(mainLayout).forward(request, response);
-    }
-
-  
-   
-
-    
 }
