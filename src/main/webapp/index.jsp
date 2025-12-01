@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- index.jsp --%>
 <%
-    request.setAttribute("pageContent", "../views/home.jsp");
+    // Redirige al Servlet que maneja la lógica de la tienda
+    response.sendRedirect(request.getContextPath() + "/");
 %>
-<jsp:include page="layout/mainLayout.jsp" />

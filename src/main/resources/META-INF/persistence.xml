@@ -19,8 +19,8 @@
       <!-- Conexión a base de datos -->
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cosmetics_store?serverTimezone=UTC"/>
-      <property name="jakarta.persistence.jdbc.user" value="admin"/>
-      <property name="jakarta.persistence.jdbc.password" value="admin"/>
+      <property name="jakarta.persistence.jdbc.user" value="glowshop"/>
+      <property name="jakarta.persistence.jdbc.password" value="glowshoputec"/>
 
       <!-- Configuración de Hibernate -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

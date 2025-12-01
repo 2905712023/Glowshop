@@ -184,7 +184,7 @@ public class ProductController extends HttpServlet {
         request.setAttribute("pageTitle", "Product Dashboard");
         request.setAttribute("pageContent", listProductPage);
         request.getRequestDispatcher(mainLayout).forward(request, response);
-    }
+    }        
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -234,10 +234,5 @@ public class ProductController extends HttpServlet {
         request.setAttribute("pageTitle", "Create Product");
         request.setAttribute("pageContent", formProductPage);
         request.getRequestDispatcher(mainLayout).forward(request, response);
-    }
-
-  
-   
-
-    
+    }   
 }
