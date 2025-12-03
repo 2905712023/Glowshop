@@ -60,16 +60,18 @@
                     </tfoot>
                 </table>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <form action="checkoutProcess" method="POST" class="d-flex justify-content-end mt-4">
+                <div class="d-flex justify-content-between align-items-center mt-4">
     
-                        <a href="index.jsp" class="btn btn-outline-secondary me-auto">
-                            <i class="fas fa-chevron-left"></i> Seguir Comprando
-                        </a>
+                    <a href="index.jsp" class="btn btn-outline-secondary">
+                        <i class="fas fa-chevron-left"></i> Seguir Comprando
+                    </a>
+                    
+                    <form action="checkoutProcess" method="POST" class="d-flex gap-2"> 
                         
-                        <a href="orderSummary?action=generatePdf" class="btn btn-danger me-2">
+                        <button type="button" class="btn btn-danger" disabled 
+                                title="Debe Confirmar la Compra primero">
                             <i class="fas fa-file-pdf"></i> Generar Reporte PDF
-                        </a>
+                        </button>
                         
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-check-circle"></i> Confirmar Compra
