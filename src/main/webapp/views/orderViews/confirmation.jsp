@@ -90,8 +90,9 @@
                                 <i class="fas fa-home"></i> Volver a la Tienda
                             </a>
                             
-                            <a href="orderSummary?action=generatePdf&invoiceId=${invoiceData.invoiceId}" class="btn btn-danger">
-                                <i class="fas fa-file-pdf"></i> Descargar Factura PDF
+                            <a href="orderSummary?action=generatePdf&invoiceId=${invoiceData.invoiceId}" 
+                                class="btn btn-danger" 
+                                target="_blank"> <i class="fas fa-file-pdf"></i> Descargar Factura PDF
                             </a>
                         </div>
                     </div>
