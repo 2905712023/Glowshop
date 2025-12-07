@@ -10,6 +10,7 @@ import com.cosmeticsstore.sv.dao.CategoryDao;
 import com.cosmeticsstore.sv.dao.ProductDAO;
 import com.cosmeticsstore.sv.model.Categories;
 import com.cosmeticsstore.sv.model.Products;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -206,7 +207,7 @@ public class ProductController extends HttpServlet {
             result = productDao.Update(product);
             request.setAttribute("message", "Producto actualizado correctamente.");
         }
-
+    }
         } catch (Exception ex) {
             errorMessage = "Error al guardar producto: " + ex.getMessage();
             System.out.println("Error al guardar producto: " + ex.getMessage());
@@ -372,16 +373,5 @@ public class ProductController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
-    private void Create(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CategoryDao categoryDao = new CategoryDao();
-
-        request.setAttribute("product", new Product());
-        request.setAttribute("categories", categoryDao.findAllToShowSelect());
-        request.setAttribute("pageTitle", "Create Product");
-        request.setAttribute("pageContent", formProductPage);
-        request.getRequestDispatcher(mainLayout).forward(request, response);
-    }   
+    }// </editor-fold> 
 }
