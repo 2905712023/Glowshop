@@ -5,12 +5,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Resumen de Orden - Glow Shop</title>
+    <title>Resumen de Orden - Glowshop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-dark p-3 text-white text-center">
+        <h4>Glowshop - Resumen</h4>
+    </header>
 
     <main class="container mt-5 flex-grow-1">
         
@@ -66,12 +70,7 @@
                         <i class="fas fa-chevron-left"></i> Seguir Comprando
                     </a>
                     
-                    <form action="checkoutProcess" method="POST" class="d-flex gap-2"> 
-                        
-                        <button type="button" class="btn btn-danger" disabled 
-                                title="Debe Confirmar la Compra primero">
-                            <i class="fas fa-file-pdf"></i> Generar Reporte PDF
-                        </button>
+                    <form action="checkoutProcess" method="POST" class="d-flex gap-2">
                         
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-check-circle"></i> Confirmar Compra
@@ -83,6 +82,10 @@
         </div>
         
     </main>
+
+    <footer class="bg-dark text-white text-center p-3 mt-4">
+        Glowshop © 2025 - Todos los derechos reservados
+    </footer>
 
     </body>
 </html>

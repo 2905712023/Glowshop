@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Confirmación de Compra - Glow Shop</title>
+    <title>Confirmación de Compra - Glowshop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"> 
@@ -13,7 +13,7 @@
 <body class="d-flex flex-column min-vh-100">
     
     <header class="bg-dark p-3 text-white text-center">
-        <h4>Glow Shop - Confirmación de Compra</h4>
+        <h4>Glowshop - Confirmación de Compra</h4>
     </header>
 
     <main class="container mt-5 flex-grow-1">
@@ -103,10 +103,11 @@
     </main>
     
     <footer class="bg-dark text-white text-center p-3 mt-4">
-        Glow Shop © 2025 - Todos los derechos reservados
+        Glowshop © 2025 - Todos los derechos reservados
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <c:remove var="shoppingCart" scope="session"/>
 </body>
 </html>

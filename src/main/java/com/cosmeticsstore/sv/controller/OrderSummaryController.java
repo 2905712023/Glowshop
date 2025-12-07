@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.cosmeticsstore.sv.dao.InvoiceDAO;
 import com.cosmeticsstore.sv.model.CartItem;
+import com.cosmeticsstore.sv.model.ErrorHandlerUtil;
 import com.cosmeticsstore.sv.model.Invoices;
 
 import jakarta.servlet.ServletException;
@@ -20,7 +21,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport; // Necesario para cargar el .jasper
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @WebServlet(name = "OrderSummaryController", urlPatterns = {"/orderSummary"})
@@ -33,12 +34,18 @@ public class OrderSummaryController extends HttpServlet {
             throws ServletException, IOException {
         
         String action = request.getParameter("action");
-        HttpSession session = request.getSession();
+        String invoiceIdParam = request.getParameter("invoiceId");
         
+        if ("view".equals(action) && invoiceIdParam != null && !invoiceIdParam.isEmpty()) {
+            generateOrderPdf(request, response);
+            return;
+        }
+
+        HttpSession session = request.getSession();
         List<CartItem> shoppingCart = (List<CartItem>) session.getAttribute("shoppingCart");
 
         if (shoppingCart == null || shoppingCart.isEmpty()) {
-            session.setAttribute("ErrorMessage", "No se puede ver el resumen, el carrito está vacío.");
+            session.setAttribute("ErrorMessage", "El carrito está vacío, agrega productos primero.");
             response.sendRedirect("index.jsp");
             return;
         }
@@ -48,19 +55,12 @@ public class OrderSummaryController extends HttpServlet {
             total += item.getSubtotal();
         }
 
-        if ("generatePdf".equals(action)) {
-            System.out.println("Generando PDF del resumen de la orden");
-            generateOrderPdf(request, response);
-            session.removeAttribute("shoppingCart");
-        } else {
-            request.setAttribute("summaryItems", shoppingCart);
-            request.setAttribute("orderTotal", total);
-            request.getRequestDispatcher("/views/orderViews/orderSummary.jsp").forward(request, response);
-        }
+        request.setAttribute("summaryItems", shoppingCart);
+        request.setAttribute("orderTotal", total);
+        request.getRequestDispatcher("/views/orderViews/orderSummary.jsp").forward(request, response);
     }
 
     private void generateOrderPdf(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
         String invoiceIdParam = request.getParameter("invoiceId");
         Integer invoiceId = null;
 
@@ -69,8 +69,9 @@ public class OrderSummaryController extends HttpServlet {
             invoiceId = Integer.parseInt(invoiceIdParam);
             
             Invoices invoiceData = invoiceDao.findByInvoiceIdWithDetails(invoiceId);
+            
             if (invoiceData == null) {
-                response.sendRedirect("index.jsp");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Factura no encontrada");
                 return;
             }
 
@@ -87,7 +88,7 @@ public class OrderSummaryController extends HttpServlet {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "inline; filename=\"reporte_orden_" + invoiceId + ".pdf\"");
+            response.setHeader("Content-Disposition", "inline; filename=\"Factura_Glowshop_" + invoiceId + ".pdf\"");
             
             ServletOutputStream out = response.getOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, out);
@@ -95,8 +96,7 @@ public class OrderSummaryController extends HttpServlet {
             out.close();
             
         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error: " + e.getMessage());
+            ErrorHandlerUtil.sendError(e, response);
         }
     }
 }

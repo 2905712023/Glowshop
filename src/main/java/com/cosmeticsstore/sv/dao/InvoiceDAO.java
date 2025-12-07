@@ -1,5 +1,7 @@
 package com.cosmeticsstore.sv.dao;
 
+import java.util.List;
+
 import com.cosmeticsstore.sv.model.Invoices;
 
 import jakarta.persistence.EntityManager;
@@ -54,6 +56,36 @@ public class InvoiceDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (em.isOpen()) em.close();
+        }
+    }
+
+    public List<Invoices> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createNamedQuery("Invoices.findAll", Invoices.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
+        } finally {
+            if (em.isOpen()) em.close();
+        }
+    }
+
+    public void delete(int invoiceId) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Invoices invoice = em.find(Invoices.class, invoiceId);
+            if (invoice != null) {
+                em.remove(invoice);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            e.printStackTrace();
         } finally {
             if (em.isOpen()) em.close();
         }

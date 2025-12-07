@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tienda de Productos - Glow Shop</title>
+    <title>Tienda de Productos - Glowshop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
@@ -18,11 +18,12 @@
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">Glow Shop</a>
+            <a class="navbar-brand" href="index.jsp">Glowshop</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link active" href="products?action=list">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="categories?action=list">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="invoices?action=list">Invoices</a></li>
                 </ul>
             </div>
             <button class="btn btn-outline-warning ms-2" type="button" 
@@ -165,7 +166,7 @@
     </main>
 
     <footer class="bg-dark text-white text-center p-3 mt-4">
-        Glow Shop © 2025 - Todos los derechos reservados
+        Glowshop © 2025 - Todos los derechos reservados
     </footer>
 
     <div id="loadingSpinner" class="spinner-overlay" style="display: none;">
@@ -215,7 +216,7 @@
         if (message && message !== '') {
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'bottom-end',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
