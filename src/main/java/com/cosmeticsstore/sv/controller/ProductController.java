@@ -162,6 +162,16 @@ public class ProductController extends HttpServlet {
 
             if (idParam != null && !idParam.trim().isEmpty()) {
                 // Es una ACTUALIZACIÓN
+            
+            System.out.println("Id del product " + idParam);
+            
+            if (idParam == null || idParam.trim().isEmpty()) {
+                // Crear nuevo producto
+                System.out.println("creando");
+                result = productDao.Create(product);
+                request.setAttribute("message", "Producto creado correctamente.");
+            } else {
+                System.out.println("actualizando producto");
                 int productId = Integer.parseInt(idParam);
                 product.setProductId(productId);
                 
