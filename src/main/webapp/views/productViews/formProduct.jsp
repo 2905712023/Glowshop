@@ -4,7 +4,7 @@
     
     <div class="card">
         <div class="card-body">
-            <form action="products" method="post">
+            <form action="products" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label>Product name</label>
                     <input value="${product.name}" name="name" type="text" maxlength="50" 
@@ -33,6 +33,18 @@
                             <option value="${category.categoryId}">${category.name}</option>
                         </c:forEach>
                     </select>                   
+                </div>
+                <div class="mb-3">
+                    <label>Product Image</label>
+                    <input name="image" type="file" accept="image/*" class="form-control" ${product.productId > 0 ? "" : "required"}> 
+                    
+                    <c:if test="${not empty imageUrl}">
+                        <div class="mt-2">
+                            <p class="mb-1 text-muted">Imagen actual:</p>
+                            <img src="${imageUrl}" alt="Imagen del producto ${product.name}" 
+                                style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px;">
+                        </div>
+                    </c:if>
                 </div>
                 <div class="mb-3">
                     <input type="hidden" name="productId" value="${product.productId}">

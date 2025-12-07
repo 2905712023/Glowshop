@@ -55,7 +55,6 @@ public class ProductDAO {
     try {
         tx.begin();
 
-        // Asegurar que la categoría esté gestionada (opcional, pero recomendado)
         if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
             Categories managedCategory = em.find(Categories.class, product.getCategory().getCategoryId());
             product.setCategory(managedCategory);
