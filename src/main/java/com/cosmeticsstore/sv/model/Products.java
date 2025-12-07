@@ -3,6 +3,7 @@ package com.cosmeticsstore.sv.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -55,8 +56,6 @@ public class Products implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     @ManyToOne
     private Categories category;
-    @Column(name = "path")
-    private String path;
 
     public Products() {
     }
@@ -94,13 +93,6 @@ public class Products implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
     
     public BigDecimal getPrice() {
