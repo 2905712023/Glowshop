@@ -9,6 +9,7 @@ public class Product {
     private Double price;
     private int stock;
     private int categoryId;
+    private String path;
 
     public int getProductId() {
         return productId;
@@ -56,5 +57,13 @@ public class Product {
 
     public void setCategoryId(int idCategoria) {
         this.categoryId = idCategoria;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

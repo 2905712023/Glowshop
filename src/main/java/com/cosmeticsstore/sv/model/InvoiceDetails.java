@@ -6,6 +6,7 @@ package com.cosmeticsstore.sv.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +46,7 @@ public class InvoiceDetails implements Serializable {
     @Basic(optional = false)
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
-    @Column(name = "subtotal")
+    @Column(name = "subtotal", insertable = false, updatable = false)
     private BigDecimal subtotal;
     @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     @ManyToOne(optional = false)

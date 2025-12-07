@@ -240,7 +240,7 @@ public class ProductController extends HttpServlet {
         request.setAttribute("pageTitle", "Product Dashboard");
         request.setAttribute("pageContent", listProductPage);
         request.getRequestDispatcher(mainLayout).forward(request, response);
-    }
+    }        
 
     private void Create(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -374,4 +374,14 @@ public class ProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private void Create(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CategoryDao categoryDao = new CategoryDao();
+
+        request.setAttribute("product", new Product());
+        request.setAttribute("categories", categoryDao.findAllToShowSelect());
+        request.setAttribute("pageTitle", "Create Product");
+        request.setAttribute("pageContent", formProductPage);
+        request.getRequestDispatcher(mainLayout).forward(request, response);
+    }   
 }
