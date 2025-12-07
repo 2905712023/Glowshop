@@ -42,6 +42,9 @@ public class Products implements Serializable {
     @Column(name = "description")
     private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = true)
+    @Column(name = "path")
+    private String path;
     @Basic(optional = false)
     @Column(name = "price")
     private BigDecimal price;
@@ -92,7 +95,14 @@ public class Products implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
     public BigDecimal getPrice() {
         return price;
     }
@@ -119,6 +129,10 @@ public class Products implements Serializable {
 
     public Categories getCategory() {
         return category;
+    }
+
+    public int getCategoryId(){
+        return category.getCategoryId();
     }
 
     public void setCategory(Categories categoryId) {
