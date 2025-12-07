@@ -41,31 +41,33 @@ public class CategoryDao {
         }
     }
 
-    public void create(Categories category) {
+    public int create(Categories category) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
             em.persist(category);
             tx.commit();
+            return 1;
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
-            throw e;
+            return 0;
         } finally {
             em.close();
         }
     }
 
-    public void update(Categories category) {
+    public int update(Categories category) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
             em.merge(category);
             tx.commit();
+            return 1;
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
-            throw e;
+            return 0;
         } finally {
             em.close();
         }

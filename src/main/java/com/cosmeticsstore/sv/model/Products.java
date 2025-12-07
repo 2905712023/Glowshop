@@ -116,6 +116,10 @@ public class Products implements Serializable {
         return category;
     }
 
+    public int getCategoryId(){
+        return category.getCategoryId();
+    }
+
     public void setCategory(Categories categoryId) {
         this.category = categoryId;
     }
