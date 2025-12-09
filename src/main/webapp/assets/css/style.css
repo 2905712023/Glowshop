@@ -1,0 +1,6 @@
+
+body { background: #f5f7fa; }
+.login-container { max-width:380px; margin:60px auto; padding:24px; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+.form-control { display:block; width:100%; padding:8px 10px; border:1px solid #ddd; border-radius:4px; }
+.btn { display:inline-block; padding:10px 14px; border-radius:6px; }
+.alert { padding:10px 12px; border-radius:4px; background:#f8d7da; color:#842029; }
