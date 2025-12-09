@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,18 +11,50 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
     <body class="d-flex flex-column min-vh-100">
-        <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.jsp">Glow Shop</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="products?action=list">Products</a></li>
-                        <li class="nav-item"><a class="nav-link" href="categories?action=list">Categories</a></li>
-                    </ul>
+        <!-- NAVBAR: visible solo cuando hay usuario en sesión -->
+        <c:if test="${not empty sessionScope.user}">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.jsp">Glow Shop</a>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <!-- Users: visible solo si el usuario tiene permiso USERS o es ADMINTOTAL -->
+                            <c:if test="${sessionScope.user.role == 'ADMINTOTAL' || sessionScope.userPerms['USERS']}">
+                                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/user-permissions">Users</a></li>
+                            </c:if>
+
+                            <!-- Categories: visible si ADMINTOTAL o si el usuario tiene permiso CATEGORIES -->
+                            <c:if test="${sessionScope.user.role == 'ADMINTOTAL' || sessionScope.userPerms['CATEGORIES']}">
+                                <li class="nav-item"><a class="nav-link" href="categories?action=list">Categories</a></li>
+                            </c:if>
+
+                            <!-- Products: visible si ADMINTOTAL, ADMIN o si el usuario tiene permiso PRODUCTS -->
+                            <c:if test="${sessionScope.user.role == 'ADMINTOTAL' || sessionScope.user.role == 'ADMIN' || sessionScope.userPerms['PRODUCTS']}">
+                                <li class="nav-item"><a class="nav-link" href="products?action=list">Products</a></li>
+                            </c:if>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link disabled" href="#">${sessionScope.user.name}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </c:if>
+
+        <!-- NAVBAR mínimo si NO hay sesión (solo nombre y enlace a login) -->
+        <c:if test="${empty sessionScope.user}">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.jsp">Glow Shop</a>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </c:if>
 
         <!-- CONTENIDO VARIABLE -->
         <main class="container mt-4">
@@ -65,8 +97,8 @@
         </style>
 
         <script>
-            var errorMessage = '${ErrorMessage}';
-            var message = '${message}';
+            var errorMessage = '${sessionScope.errorMessage}';
+            var message = '${sessionScope.message}';
 
             if (errorMessage && errorMessage !== '') {
                 Swal.fire({
@@ -98,5 +130,5 @@
 
     </body>
     <c:remove var="message" scope="session"/>
-    <c:remove var="ErrorMessage" scope="session"/>
+    <c:remove var="errorMessage" scope="session"/>
 </html>
