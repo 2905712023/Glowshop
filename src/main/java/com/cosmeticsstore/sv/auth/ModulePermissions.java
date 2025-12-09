@@ -37,7 +37,7 @@ public class ModulePermissions {
     public static boolean isRoleAllowed(String role, String module) {
         if (role == null || module == null) return false;
         Set<String> roles = getRolesForModule(module);
-        return roles.contains(role);
+        return roles.contains(role.toUpperCase());
     }
 
     /**

@@ -1,15 +1,5 @@
 <%-- index.jsp --%>
 <%
-    // Decide qué vista mostrar según sesión
-    Object user = session.getAttribute("user");
-    if (user != null) {
-        request.setAttribute("pageTitle", "Home");
-        request.setAttribute("pageContent", "/views/home.jsp");
-    } else {
-        request.setAttribute("pageTitle", "Login");
-        request.setAttribute("pageContent", "/views/login.jsp");
-    }
-
     // debug: activa con ?debug=1 para mostrar información útil en página y logs
     boolean debugMode = "1".equals(request.getParameter("debug"));
     if (debugMode) {

@@ -1,12 +1,14 @@
 package com.cosmeticsstore.sv.controller;
 
-import com.cosmeticsstore.sv.dao.BitacoraDAO;
-import com.cosmeticsstore.sv.dao.UserPermissionDAO;
-import com.cosmeticsstore.sv.dao.UserDAO;
-import com.cosmeticsstore.sv.model.Bitacora;
-import com.cosmeticsstore.sv.model.Users;
 import java.io.IOException;
 import java.util.Date;
+
+import com.cosmeticsstore.sv.dao.BitacoraDAO;
+import com.cosmeticsstore.sv.dao.UserDAO;
+import com.cosmeticsstore.sv.dao.UserPermissionDAO;
+import com.cosmeticsstore.sv.model.Bitacora;
+import com.cosmeticsstore.sv.model.Users;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -42,7 +44,7 @@ public class LoginController extends HttpServlet {
 
 		request.setAttribute("pageTitle", "Login");
 		request.setAttribute("pageContent", loginPage);
-		request.getRequestDispatcher(mainLayout).forward(request, response);
+		request.getRequestDispatcher(loginPage).forward(request, response);
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("errorMessage", "Usuario bloqueado. Intenta nuevamente en " + secondsLeft + " segundos.");
 			request.setAttribute("pageTitle", "Login");
 			request.setAttribute("pageContent", loginPage);
-			request.getRequestDispatcher(mainLayout).forward(request, response);
+			request.getRequestDispatcher(loginPage).forward(request, response);
 			return;
 		}
 		
@@ -130,14 +132,14 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("errorMessage", "Usuario bloqueado por " + lockSeconds + " segundos debido a múltiples intentos fallidos.");
 				request.setAttribute("pageTitle", "Login");
 				request.setAttribute("pageContent", loginPage);
-				request.getRequestDispatcher(mainLayout).forward(request, response);
+				request.getRequestDispatcher(loginPage).forward(request, response);
 				return;
 			} else {
 				// aún dentro del límite: mostrar intentos
 				session.setAttribute("errorMessage", "Credenciales inválidas. Intentos: " + attempts);
 				request.setAttribute("pageTitle", "Login");
 				request.setAttribute("pageContent", loginPage);
-				request.getRequestDispatcher(mainLayout).forward(request, response);
+				request.getRequestDispatcher(loginPage).forward(request, response);
 				return;
 			}
 

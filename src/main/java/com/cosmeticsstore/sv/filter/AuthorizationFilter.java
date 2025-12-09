@@ -1,8 +1,11 @@
 package com.cosmeticsstore.sv.filter;
 
+import java.io.IOException;
+
 import com.cosmeticsstore.sv.auth.ModulePermissions;
 import com.cosmeticsstore.sv.dao.UserPermissionDAO;
 import com.cosmeticsstore.sv.model.Users;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
@@ -13,7 +16,6 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * Filtro de autorización por módulos. Comprueba el rol del usuario en sesión
@@ -53,8 +55,8 @@ public class AuthorizationFilter extends HttpFilter {
             }
 
             boolean allowed = false;
-            // role ADMINTOTAL siempre permite
-            if (suser.getRole() != null && suser.getRole().equals("ADMINTOTAL")) {
+            // role ADMIN siempre permite
+            if (suser.getRole() != null && suser.getRole().equals("admin")) {
                 allowed = true;
             } else {
                 // comprobar permiso en BD (user_module_permissions)
