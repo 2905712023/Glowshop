@@ -24,6 +24,15 @@
                 <h2 class="mb-4">📋 Resumen de tu Orden</h2>
                 <hr>
 
+                <div class="alert alert-light border shadow-sm d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <i class="fas fa-user-tie text-secondary me-2"></i>
+                        <span class="text-muted">Atendido por:</span>
+                        <strong class="text-dark ms-1">
+                            <c:out value="${not empty sessionScope.user ? sessionScope.user.getName() : 'Invitado'}"/>
+                        </strong>
+                    </div>
+                </div>
                 <table class="table table-bordered table-striped">
                     <thead class="bg-dark text-white">
                         <tr>
@@ -64,14 +73,21 @@
                     </tfoot>
                 </table>
 
-                <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="d-flex justify-content-between align-items-end mt-4">
     
-                    <a href="index.jsp" class="btn btn-outline-secondary">
+                    <a href="index.jsp" class="btn btn-outline-secondary mb-3">
                         <i class="fas fa-chevron-left"></i> Seguir Comprando
                     </a>
                     
-                    <form action="checkoutProcess" method="POST" class="d-flex gap-2">
+                    <form action="checkoutProcess" method="POST" class="text-end">
                         
+                        <div class="mb-3 text-start">
+                            <label for="customerName" class="form-label fw-bold">Nombre del Cliente (Opcional):</label>
+                            <input type="text" class="form-control" id="customerName" name="customerName" 
+                                placeholder="Ingrese su nombre o dejar vacío">
+                            <div class="form-text">Si se deja vacío, se registrará como "Clientes Varios".</div>
+                        </div>
+
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-check-circle"></i> Confirmar Compra
                         </button>

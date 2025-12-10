@@ -31,12 +31,21 @@
                         
                         <h4 class="card-title mb-3 text-secondary">Información de la Factura</h4>
                         <hr>
-                        
-                        <div class="d-flex justify-content-between mb-4">
-                            <p class="fs-4 mb-0">Factura No: 
-                                <strong class="text-primary">#<c:out value="${invoiceData.invoiceId}"/></strong>
-                            </p>
-                            <p class="mb-0 text-muted">Fecha: 
+
+                        <div class="d-flex justify-content-between mb-4 flex-wrap">
+                            <div>
+                                <p class="fs-4 mb-0">Factura No: 
+                                    <strong class="text-primary">#<c:out value="${invoiceData.invoiceId}"/></strong>
+                                </p>
+                                
+                                <p class="mb-0 fs-5">Cliente: 
+                                    <strong class="text-dark">
+                                        <c:out value="${not empty invoiceData.customer ? invoiceData.customer : 'Clientes Varios'}"/>
+                                    </strong>
+                                </p>
+                            </div>
+
+                            <p class="mb-0 text-muted align-self-center">Fecha: 
                                 <fmt:formatDate value="${invoiceData.date}" pattern="dd/MM/yyyy HH:mm"/>
                             </p>
                         </div>

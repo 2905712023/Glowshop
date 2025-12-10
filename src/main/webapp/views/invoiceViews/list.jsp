@@ -53,7 +53,7 @@
                             <th class="py-3">ID Factura</th>
                             <th class="py-3">Fecha</th>
                             <th class="py-3">Cliente</th>
-                            <th class="py-3">Vendedor</th>
+                            <th class="py-3">Usuario (Vendedor)</th>
                             <th class="py-3 text-end">Total</th>
                             <th class="py-3 text-center" style="width: 320px;">Acciones</th>
                         </tr>
@@ -65,19 +65,24 @@
                                 <td>
                                     <fmt:formatDate value="${inv.date}" pattern="dd/MM/yyyy HH:mm"/>
                                 </td>
+                                
                                 <td>
                                     <c:choose>
-                                        <c:when test="${not empty inv.customerId}">
-                                            <i class="fas fa-user text-muted me-1"></i> ${inv.customerId.getName()}
+                                        <c:when test="${not empty inv.customer}">
+                                            <i class="fas fa-user-tag text-muted small"></i> ${inv.customer}
                                         </c:when>
-                                        <c:otherwise>Cliente General</c:otherwise>
+                                        <c:otherwise>
+                                            <span class="text-muted fst-italic">Clientes Varios</span>
+                                        </c:otherwise>
                                     </c:choose>
                                 </td>
+
                                 <td>
                                     <c:if test="${not empty inv.userId}">
-                                        ${inv.userId.getName()}
+                                         ${inv.userId.getName()}
                                     </c:if>
                                 </td>
+                                
                                 <td class="text-end fw-bold text-success fs-5">
                                     $<fmt:formatNumber value="${inv.total}" pattern="#,##0.00"/>
                                 </td>
