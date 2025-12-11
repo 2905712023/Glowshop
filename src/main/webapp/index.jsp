@@ -16,7 +16,7 @@
     }
 %>
 
-<jsp:include page="/layout/mainLayout.jsp" />
+<jsp:include page="/views/store.jsp" />
 
 <%
     if (request.getAttribute("__debug_mode__") != null) {
