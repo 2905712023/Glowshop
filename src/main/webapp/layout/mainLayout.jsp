@@ -53,7 +53,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'admintotal' or sessionScope.user.role == 'admin' or sessionScope.user.role == 'employee'}">
+                    <c:if test="${not empty sessionScope.user and (sessionScope.user.role == 'admintotal' or sessionScope.user.role == 'admin' or sessionScope.user.role == 'employee')}">
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products?action=list">Productos</a></li>
                     </c:if>
 
@@ -83,6 +83,21 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
+
+                <button class="btn btn-outline-warning me-3" type="button" 
+                        data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                    <i class="fas fa-shopping-cart"></i> 
+                    Carrito
+                    <span class="badge bg-danger rounded-pill">
+                        <c:set var="cartSize" value="${0}"/>
+                        <c:if test="${not empty shoppingCart}">
+                            <c:forEach var="item" items="${shoppingCart}">
+                                <c:set var="cartSize" value="${cartSize + item.cantidad}"/>
+                            </c:forEach>
+                        </c:if>
+                        ${cartSize}
+                    </span>
+                </button>
             </div>
         </div>
     </nav>

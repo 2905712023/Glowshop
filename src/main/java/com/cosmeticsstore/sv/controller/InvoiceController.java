@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class InvoiceController extends HttpServlet {
 
     private final InvoiceDAO invoiceDao = new InvoiceDAO();
+    private final String mainLayout = "/layout/mainLayout.jsp";
     private final String listInvoicePage = "/views/invoiceViews/list.jsp";
     private final String detailsInvoicePage = "/views/invoiceViews/details.jsp";
 
@@ -48,7 +49,8 @@ public class InvoiceController extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("invoices", invoiceDao.findAll());
             request.setAttribute("pageTitle", "Facturas");
-            request.getRequestDispatcher("views/invoiceViews/list.jsp").forward(request, response);
+            request.setAttribute("pageContent", listInvoicePage);
+            request.getRequestDispatcher(mainLayout).forward(request, response);
         } catch (Exception e) {
             ErrorHandlerUtil.sendError(e, response);
         }
@@ -63,7 +65,8 @@ public class InvoiceController extends HttpServlet {
             
             if (invoice != null) {
                 request.setAttribute("invoice", invoice);
-                request.getRequestDispatcher("views/invoiceViews/details.jsp").forward(request, response);
+                request.setAttribute("pageContent", detailsInvoicePage);
+                request.getRequestDispatcher(mainLayout).forward(request, response);
             } else {
                 response.sendRedirect("invoices?action=list");
             }
