@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
-<div class="container-fluid min-vh-100">
-    <h3 class="mb-3">Manage Products</h3>
+<div class="container mt-5">
+    <h3 class="mb-3">Administrar Productos</h3>
     <a href="products?action=new" class="btn btn-success btn-sm mb-3">
-        <i class="fa fa-plus-circle"></i> New Product
+        <i class="fa fa-plus-circle"></i> Producto Nuevo
     </a>
     <div class="card">
         <div class="card-body">
@@ -11,11 +11,11 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre de producto</th>
+                        <th>Nombre Producto</th>
                         <th>Descripción</th>
                         <th>Precio</th>
                         <th>Stock</th>
-                        <th>Categoria</th>
+                        <th>Categoría</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -30,12 +30,12 @@
                             <td>${item.category.name}</td>
                             <td>
                                 <a href="products?action=update&productId=${item.productId}"
-                                    class="btn btn-info btn-sm">
+                                    class="btn btn-info btn-sm" title="Editar">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="products?action=delete&productId=${item.productId}"
                                     class="btn btn-danger btn-sm btn-delete"
-                                    data-id="${item.productId}">
+                                    data-id="${item.productId}" title="Eliminar">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

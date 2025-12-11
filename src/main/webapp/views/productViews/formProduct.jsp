@@ -1,32 +1,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container-fluid min-vh-100">
-    <h3 class="mb-3">${product.productId > 0 ? "Update": "Create"} Product</h3>
+<div class="container mt-5">
+    <h3 class="mb-3">${product.productId > 0 ? "Editar": "Crear"} Producto</h3>
     
     <div class="card">
         <div class="card-body">
             <form action="products" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label>Product name</label>
+                    <label>Nombre Producto</label>
                     <input value="${product.name}" name="name" type="text" maxlength="50" 
                             class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label>Description</label>
+                    <label>Descripción</label>
                     <input value="${product.description}" name="description" type="text" maxlength="50" 
                             class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label>Product price</label>
+                    <label>Precio Producto</label>
                     <input value="${product.price}" name="price" type="number" 
                         step="0.01"    class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label>Items in stock</label>
+                    <label>Cantidad de Stock</label>
                     <input value="${product.stock}" name="stock" type="number" 
                             class="form-control" required>
                 </div>
                     <div class="mb-3">
-                    <label>Category</label>
+                    <label>Categoría</label>
                     <select class="form-control" name="categoryId" id="categoryId">
                         <option value="">Seleccione una categoría</option>
                         <c:forEach items="${categories}" var="category">
@@ -35,7 +35,7 @@
                     </select>                   
                 </div>
                 <div class="mb-3">
-                    <label>Product Image</label>
+                    <label>Imagen Producto</label>
                     <input name="image" type="file" accept="image/*" class="form-control" ${product.productId > 0 ? "" : "required"}> 
                     
                     <c:if test="${not empty imageUrl}">
@@ -51,11 +51,11 @@
                     <input type="hidden" id="category-hidden" name="categoryId" value="${categoryId}">
                     <input type="hidden" name="action" value="save">
                     <button class="btn btn-primary btn-sm">
-                        <i class="fa fa-save"></i> Save
+                        <i class="fa fa-save"></i> Guardar
                     </button>
                     <a href="products?action=list" 
                         class="btn btn-dark btn-sm">
-                        <i class="fa fa-arrow-left"></i> Products
+                        <i class="fa fa-arrow-left"></i> Productos
                     </a>
                 </div>
             </form>

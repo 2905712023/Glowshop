@@ -55,8 +55,8 @@ public class Product {
         return categoryId;
     }
 
-    public void setCategoryId(int idCategoria) {
-        this.categoryId = idCategoria;
+    public void setCategoryId(int idCategoría) {
+        this.categoryId = idCategoría;
     }
 
     public String getPath() {

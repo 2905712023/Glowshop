@@ -1,11 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="container-fluid min-vh-100">
+<div class="container mt-5">
     
         
-    <h3 class="mb-3">Manage Categories</h3>
+    <h3 class="mb-3">Administrar Categorías</h3>
 
     <a href="categories?action=new" class="btn btn-success btn-sm mb-3">
-        <i class="fa fa-plus-circle"></i> New Category
+        <i class="fa fa-plus-circle"></i> Categoría Nueva
     </a>
     <div class="card">
         <div class="card-body">
@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre de Categoria</th>
+                        <th>Nombre de Categoría</th>
                         <th>Descripción</th>
                         <th>Acción</th>
                     </tr>
@@ -26,12 +26,12 @@
                             <td>${item.description}</td>                         
                             <td>
                                 <a href="categories?action=update&categoryId=${item.categoryId}"
-                                    class="btn btn-info btn-sm">
+                                    class="btn btn-info btn-sm" title="Editar">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="categories?action=delete&categoryId=${item.categoryId}"
                                     class="btn btn-danger btn-sm btn-delete"
-                                    data-id="${item.categoryId}">
+                                    data-id="${item.categoryId}" title="Eliminar">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
