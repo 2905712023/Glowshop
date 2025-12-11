@@ -95,7 +95,7 @@ public class LoginController extends HttpServlet {
 			session.removeAttribute("lockUntil");
 			session.removeAttribute("lockDuration");
 			session.removeAttribute("errorMessage");
-			response.sendRedirect(request.getContextPath() + "/index.jsp");
+			response.sendRedirect("products?action=list");
 			return;
 		} else {
 			attempts = (Integer) session.getAttribute("loginAttempts");
