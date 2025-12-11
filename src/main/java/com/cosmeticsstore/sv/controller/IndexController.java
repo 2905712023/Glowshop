@@ -20,7 +20,6 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         
         request.setAttribute("products", productDao.findAll());
-        
         request.setAttribute("pageTitle", "Glowshop | Inicio y Productos");
                 
         request.getRequestDispatcher(storePage).forward(request, response);
