@@ -106,6 +106,10 @@ public class Invoices implements Serializable {
     }
 
     public String getCustomer() {
+        if (customer == null) {
+            return "Clientes Varios";
+        }
+        
         return customer;
     }
 
