@@ -24,14 +24,18 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>📋 Detalles de Factura #${invoice.invoiceId}</h2>
                     <span class="badge bg-secondary fs-6">
-                        <i class="far fa-calendar-alt"></i> 
+                         <i class="far fa-calendar-alt"></i> 
                         <fmt:formatDate value="${invoice.date}" pattern="dd/MM/yyyy HH:mm"/>
                     </span>
                 </div>
                 
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body bg-light">
-                        <strong>Cliente:</strong> ${invoice.customerId.getName()} | 
+                        <strong>Cliente:</strong> 
+                        <span class="text-primary">
+                            ${not empty invoice.customer ? invoice.customer : 'Clientes Varios'}
+                        </span> 
+                        <span class="mx-2">|</span>
                         <strong>Atendido por:</strong> ${invoice.userId.getName()}
                     </div>
                 </div>

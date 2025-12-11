@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,12 +52,11 @@ public class Invoices implements Serializable {
     private BigDecimal total;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoiceId")
     private Collection<InvoiceDetails> invoiceDetailsCollection;
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     @ManyToOne(optional = false)
-    private Customers customerId;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
     private Users userId;
+    @Column(name = "customer")
+    private String customer;
 
     public Invoices() {
     }
@@ -97,20 +97,20 @@ public class Invoices implements Serializable {
         this.invoiceDetailsCollection = invoiceDetailsCollection;
     }
 
-    public Customers getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customers customerId) {
-        this.customerId = customerId;
-    }
-
     public Users getUserId() {
         return userId;
     }
 
     public void setUserId(Users userId) {
         this.userId = userId;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     @Override
