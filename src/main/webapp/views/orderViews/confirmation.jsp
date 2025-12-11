@@ -23,7 +23,7 @@
 
                 <div class="alert alert-success text-center border border-success">
                     <h2>🎉 ¡Compra Exitosa!</h2>
-                    <p class="lead mb-0">Tu orden ha sido procesada con éxito. **Tu brillo, nuestra misión.**</p>
+                    <p class="lead mb-0">Tu orden ha sido procesada con éxito. <strong>Tu brillo, nuestra misión.</strong></p>
                 </div>
                 
                 <div class="card shadow-lg mb-4">

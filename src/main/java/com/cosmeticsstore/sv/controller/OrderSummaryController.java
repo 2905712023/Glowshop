@@ -1,6 +1,7 @@
 package com.cosmeticsstore.sv.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,10 @@ public class OrderSummaryController extends HttpServlet {
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("REPORT_TOTAL", invoiceData.getTotal());
             parameters.put("REPORT_INVOICE_ID", invoiceId);
+            parameters.put("REPORT_INVOICE_CUSTOMER", invoiceData.getCustomer());
+
+            SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+            parameters.put("REPORT_INVOICE_DATE", formater.format(invoiceData.getDate()));
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             
