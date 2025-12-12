@@ -126,15 +126,13 @@ public class ProductController extends HttpServlet {
         int result = 0;
 
         try {
-            Part filePart = request.getPart("image");
             String idParam = getParameterValue(request, "productId");
             String name = getParameterValue(request, "name");
             String description = getParameterValue(request, "description");
             String priceString = getParameterValue(request, "price");
             String stockString = getParameterValue(request, "stock");
             String categoryIdString = getParameterValue(request, "categoryId");
-
-            // Validaciones básicas
+            Part filePart = request.getPart("image");
             if (name == null || name.trim().isEmpty())
                 throw new IllegalArgumentException("El nombre del producto es obligatorio.");
             if (priceString == null || priceString.trim().isEmpty())
@@ -147,90 +145,67 @@ public class ProductController extends HttpServlet {
             BigDecimal price = new BigDecimal(priceString);
             int stock = Integer.parseInt(stockString);
             int categoryId = Integer.parseInt(categoryIdString);
-
             CategoryDao categoryDao = new CategoryDao();
             Categories category = categoryDao.findById(categoryId);
-            if (category == null) {
+
+            if (category == null)
                 throw new IllegalArgumentException("La categoría seleccionada no existe.");
-            }
 
             product.setName(name);
             product.setDescription(description);
             product.setPrice(price);
             product.setStock(stock);
             product.setCategory(category);
-            String currentPath = null; // Para la edición
 
-            if (idParam != null && !idParam.trim().isEmpty()) {
-                // Es una ACTUALIZACIÓN
-            
-            System.out.println("Id del product " + idParam);
-            
-            if (idParam == null || idParam.trim().isEmpty()) {
-                // Crear nuevo producto
-                System.out.println("creando");
-                result = productDao.Create(product);
-                request.setAttribute("message", "Producto creado correctamente.");
-            } else {
-                System.out.println("actualizando producto");
+            boolean isNew = (idParam == null || idParam.trim().isEmpty());
+            String currentPath = null;
+            if (!isNew) {
                 int productId = Integer.parseInt(idParam);
+                Products existing = productDao.FindById(productId);
+
+                if (existing == null)
+                    throw new IllegalArgumentException("El producto no existe.");
+
                 product.setProductId(productId);
-                
-                // 1. Obtener el producto existente para no perder la ruta de la imagen actual
-                Products existingProduct = productDao.FindById(productId);
-                if(existingProduct != null) {
-                    currentPath = existingProduct.getPath();
-                    product.setPath(currentPath); // Mantener la ruta actual por defecto
-                }
+                currentPath = existing.getPath();
+                product.setPath(currentPath);
             }
-        
-        if (filePart != null && filePart.getSize() > 0) {
-            String newPath = uploadFile(request, filePart);
-            
-            if (newPath != null) {
-                // 3. Eliminar la imagen antigua si existe y es una actualización
-                if (currentPath != null && !currentPath.equals(DEFAULT_IMAGE)) {
-                    deleteFile(currentPath); 
+            if (filePart != null && filePart.getSize() > 0) {
+
+                String newPath = uploadFile(request, filePart);
+
+                if (newPath != null) {
+                    if (currentPath != null && !currentPath.equals(DEFAULT_IMAGE)) {
+                        deleteFile(currentPath);
+                    }
+                    product.setPath(newPath);
                 }
-                product.setPath(newPath); // Asignar la nueva ruta
+
+            } else if (isNew) {
+                product.setPath(DEFAULT_IMAGE);
             }
-        } else if (product.getProductId() == null || product.getProductId() == 0) {
-            product.setPath(null);
-        }
-        
-        if (idParam == null || idParam.trim().isEmpty()) {
-            // Crear nuevo producto
-            result = productDao.Create(product);
-            request.setAttribute("message", "Producto creado correctamente.");
-        } else {
-            // Actualizar producto
-            result = productDao.Update(product);
-            request.setAttribute("message", "Producto actualizado correctamente.");
-        }
-    }
+            if (isNew) {
+                result = productDao.Create(product);
+                request.getSession().setAttribute("message", "Producto creado correctamente.");
+            } else {
+                result = productDao.Update(product);
+                request.getSession().setAttribute("message", "Producto actualizado correctamente.");
+            }
+
         } catch (Exception ex) {
-            errorMessage = "Error al guardar producto: " + ex.getMessage();
-            System.out.println("Error al guardar producto: " + ex.getMessage());
+            errorMessage = ex.getMessage();
             ex.printStackTrace();
         }
-
         if (errorMessage != null) {
-            request.setAttribute("errorMessage", errorMessage);
-            System.out.println("Error al guardar. Message: " + errorMessage);
-        }
-
-        if (result > 0) {
-            System.out.println("Producto guardado correctamente.");
-            request.getSession().setAttribute("message", "Producto guardado correctamente.");
-            response.sendRedirect("products?action=list");
-        } else {
-            System.out.println("ERROR AL GUARDAR : "+errorMessage);
-            request.getSession().setAttribute("ErrorMessage", "ERROR AL GUARDAR : "+errorMessage);
+            request.getSession().setAttribute("ErrorMessage", errorMessage);
             request.setAttribute("product", product);
             request.setAttribute("pageContent", formProductPage);
             request.getRequestDispatcher(mainLayout).forward(request, response);
+        } else {
+            response.sendRedirect("products?action=list");
         }
     }
+
  
     protected void List(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
